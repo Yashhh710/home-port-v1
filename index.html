@@ -3135,6 +3135,7 @@
             <!-- Main Background Wallpapers -->
             <img id="bgDay" class="bg-layer hidden" src="models/Day/Day.png" alt="Day Scene">
             <img id="bgNight" class="bg-layer" src="models/Night/Night.png" alt="Night Scene">
+            <img id="nightOverlay" class="bg-layer" src="models/Night/night.png" alt="Night Overlay">
 
             <!-- Audio Inspector Panel (Draggable) -->
             <div id="inspectorPanel" class="inspector-panel">
@@ -3273,6 +3274,7 @@
 
         const bgDay = document.getElementById('bgDay');
         const bgNight = document.getElementById('bgNight');
+        const nightOverlay = document.getElementById('nightOverlay');
         const lampDay = document.getElementById('lampDay');
         const lampNight = document.getElementById('lampNight');
         const robotDay = document.getElementById('robotDay');
@@ -3401,6 +3403,7 @@
         lampBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             bgDay.classList.toggle('hidden'); bgNight.classList.toggle('hidden');
+            if (nightOverlay) nightOverlay.classList.toggle('hidden');
             lampDay.classList.toggle('hidden'); lampNight.classList.toggle('hidden');
             robotDay.classList.toggle('hidden'); robotNight.classList.toggle('hidden');
             macDay.classList.toggle('hidden'); macNight.classList.toggle('hidden');
