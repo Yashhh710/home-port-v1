@@ -167,13 +167,7 @@
             left: 0;
             z-index: 1;
             opacity: 1;
-            pointer-events: none;
-            transition: opacity 0.7s ease-in-out;
-        }
-
-        .bg-layer.hidden {
-            opacity: 0 !important;
-            transition: opacity 0.7s ease-in-out !important;
+            transition: opacity 0.6s ease-in-out;
         }
 
         /* Clickable Desk Lamp Layer */
@@ -3141,7 +3135,6 @@
             <!-- Main Background Wallpapers -->
             <img id="bgDay" class="bg-layer hidden" src="models/Day/Day.png" alt="Day Scene">
             <img id="bgNight" class="bg-layer" src="models/Night/Night.png" alt="Night Scene">
-            <img id="nightOverlay" class="bg-layer" src="models/Night/night.png" alt="Night Overlay">
 
             <!-- Audio Inspector Panel (Draggable) -->
             <div id="inspectorPanel" class="inspector-panel">
@@ -3280,11 +3273,6 @@
 
         const bgDay = document.getElementById('bgDay');
         const bgNight = document.getElementById('bgNight');
-        const nightOverlay = document.getElementById('nightOverlay');
-        // Set initial opacity via inline style so transitions work correctly from the start
-        if (bgDay) { bgDay.style.opacity = '0'; bgDay.style.transition = 'opacity 0.7s ease-in-out'; bgDay.style.pointerEvents = 'none'; }
-        if (bgNight) { bgNight.style.opacity = '1'; bgNight.style.transition = 'opacity 0.7s ease-in-out'; bgNight.style.pointerEvents = 'none'; }
-        if (nightOverlay) { nightOverlay.style.opacity = '1'; nightOverlay.style.transition = 'opacity 0.7s ease-in-out'; nightOverlay.style.pointerEvents = 'none'; }
         const lampDay = document.getElementById('lampDay');
         const lampNight = document.getElementById('lampNight');
         const robotDay = document.getElementById('robotDay');
@@ -3304,7 +3292,7 @@
         const targetWebUrl = "https://mac-lyart.vercel.app/";
 
         function isCurrentlyNight() {
-            return isNight;
+            return bgDay.classList.contains('hidden');
         }
 
         function updateTooltipPos(e) {
@@ -3410,23 +3398,9 @@
         }
 
         // Ambient Lighting Toggles
-        // Helper: smoothly fade a bg-layer in or out
-        function fadeBgLayer(el, visible) {
-            if (!el) return;
-            el.style.transition = 'opacity 0.7s ease-in-out';
-            el.style.opacity = visible ? '1' : '0';
-            el.style.pointerEvents = 'none';
-        }
-
-        // Track mode with a flag (start in night mode)
-        let isNight = true;
-
         lampBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            isNight = !isNight;
-            fadeBgLayer(bgDay,        !isNight);
-            fadeBgLayer(bgNight,       isNight);
-            fadeBgLayer(nightOverlay,  isNight);
+            bgDay.classList.toggle('hidden'); bgNight.classList.toggle('hidden');
             lampDay.classList.toggle('hidden'); lampNight.classList.toggle('hidden');
             robotDay.classList.toggle('hidden'); robotNight.classList.toggle('hidden');
             macDay.classList.toggle('hidden'); macNight.classList.toggle('hidden');
